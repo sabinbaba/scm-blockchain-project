@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard - Supply Chain</title>
-    <link rel="stylesheet" href="/css/admin-style.css">
+    <title>Admin - System Logs</title>
+    <link rel="stylesheet" href="../css/admin-style.css">
 </head>
 <body>
 
-<!-- Header -->
 <header class="header">
     <div class="logo">SCM Blockchain</div>
     <div class="header-right">
@@ -16,10 +15,8 @@
     </div>
 </header>
 
-<!-- Layout -->
 <div class="main-container">
 
-    <!-- Sidebar -->
     <aside class="sidebar">
         <ul>
             <li><a href="admin.html">Dashboard</a></li>
@@ -30,47 +27,45 @@
         </ul>
     </aside>
 
-    <!-- Main Content -->
     <main class="content">
-        <h1>Welcome, Admin!</h1>
-        <div class="cards">
-            <div class="card">
-                <h3>Total Users</h3>
-                <p id="totalUsers">12</p>
-            </div>
-            <div class="card">
-                <h3>Total Products</h3>
-                <p id="totalProducts">50</p>
-            </div>
-            <div class="card">
-                <h3>Transactions</h3>
-                <p id="totalTx">75</p>
-            </div>
-        </div>
+        <h1>System Logs</h1>
 
         <div class="table-container">
-            <h2>Recent Transactions</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>Tx ID</th>
-                        <th>Action</th>
+                        <th>Log ID</th>
                         <th>User</th>
-                        <th>Date</th>
+                        <th>Action</th>
+                        <th>Status</th>
+                        <th>Date & Time</th>
+                        <th>Details</th>
                     </tr>
                 </thead>
-                <tbody id="txTable">
+                <tbody id="logsTable">
                     <tr>
-                        <td>TX001</td>
-                        <td>Added Product</td>
-                        <td>Manufacturer1</td>
-                        <td>2026-01-02</td>
+                        <td>L001</td>
+                        <td>Admin</td>
+                        <td>Login</td>
+                        <td>Success</td>
+                        <td>2026-01-02 09:00 AM</td>
+                        <td>-</td>
                     </tr>
                     <tr>
-                        <td>TX002</td>
-                        <td>Transferred Product</td>
+                        <td>L002</td>
+                        <td>Manufacturer1</td>
+                        <td>Add Product</td>
+                        <td>Success</td>
+                        <td>2026-01-02 10:00 AM</td>
+                        <td>Product ID: P001</td>
+                    </tr>
+                    <tr>
+                        <td>L003</td>
                         <td>Distributor1</td>
-                        <td>2026-01-02</td>
+                        <td>Transfer Product</td>
+                        <td>Failed</td>
+                        <td>2026-01-02 12:30 PM</td>
+                        <td>Invalid product ID</td>
                     </tr>
                 </tbody>
             </table>
@@ -78,7 +73,6 @@
     </main>
 </div>
 
-<!-- Footer -->
 <footer class="footer">
     <p>&copy; 2026 SCM Blockchain System. All Rights Reserved.</p>
 </footer>
