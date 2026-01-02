@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Distributor Dashboard</title>
+    <link rel="stylesheet" href="../css/admin-style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="logo">SCM Blockchain</div>
+    <div class="header-right">
+        <span id="userName">Distributor1</span>
+        <button class="logout-btn">Logout</button>
+    </div>
+</header>
+
+<!-- MAIN LAYOUT -->
+<div class="main-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <ul>
+            <li><a href="distributor.html">Dashboard</a></li>
+            <li><a href="my-products.html">My Products</a></li>
+            <li><a href="transfer-products.html">Transfer Products</a></li>
+        </ul>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+        <h1>Distributor Dashboard</h1>
+        <p>Welcome, Distributor1! You can manage products received from manufacturers and transfer them to retailers.</p>
+
+        <!-- PRODUCTS TABLE -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Owner</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Batch</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTable">
+                    <tr id="P001">
+                        <td>P001</td>
+                        <td>Smartphone</td>
+                        <td>Electronics</td>
+                        <td>Distributor1</td>
+                        <td>In Transit</td>
+                        <td>2026-01-02</td>
+                        <td>B001</td>
+                        <td>
+                            <button class="transfer-btn">Transfer</button>
+                        </td>
+                    </tr>
+                    <tr id="P002">
+                        <td>P002</td>
+                        <td>Vaccine</td>
+                        <td>Health</td>
+                        <td>Manufacturer2</td>
+                        <td>In Transit</td>
+                        <td>2026-01-02</td>
+                        <td>B002</td>
+                        <td>
+                            <!-- Transfer button hidden: Distributor doesn't own this -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MODAL FOR TRANSFER PRODUCT -->
+        <div id="transferModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Transfer Product</h2>
+                <form id="transferForm">
+                    <label for="newOwner">Transfer to Retailer:</label>
+                    <input type="text" id="newOwner" placeholder="Retailer Name" required>
+                    <button type="submit" class="save-btn">Transfer</button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <p>&copy; 2026 SCM Blockchain System. All Rights Reserved.</p>
+</footer>
+
+<!-- JS -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const role = "Distributor";
+    const username = "Distributor1";
+
+    // DISPLAY USER NAME
+    document.getElementById("userName").innerText = username;
+
+    const transferModal = document.getElementById("transferModal");
+    const closeBtns = document.querySelectorAll(".modal .close");
+    const productsTable = document.getElementById("productsTable");
+    const transferForm = document.getElementById("transferForm");
+
+    // CLOSE MODALS
+    closeBtns.forEach(btn => btn.addEventListener("click", () => {
+        btn.closest(".modal").style.display = "none";
+    }));
+    window.onclick = (e) => { if(e.target.classList.contains("modal")) e.target.style.display = "none"; };
+
+    // ATTACH EVENTS TO EACH ROW
+    function attachProductEvents(row){
+        const owner = row.cells[3].innerText;
+
+        const transferBtn = row.querySelector(".transfer-btn");
+        if(transferBtn){
+            if(owner !== username){
+                transferBtn.style.display = "none"; // cannot transfer others' products
+            } else {
+                transferBtn.addEventListener("click", () => {
+                    transferModal.style.display = "block";
+                    transferForm.dataset.rowId = row.id;
+                    document.getElementById("newOwner").value = "";
+                });
+            }
+        }
+    }
+
+    // TRANSFER PRODUCT
+    transferForm?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const newOwner = document.getElementById("newOwner").value;
+        const rowId = transferForm.dataset.rowId;
+        const row = document.getElementById(rowId);
+        row.cells[3].innerText = newOwner;
+        row.cells[4].innerText = "In Transit";
+        transferModal.style.display = "none";
+        // Remove Transfer button if new owner is not this distributor
+        row.querySelector(".transfer-btn")?.remove();
+    });
+
+    // INITIALIZE EXISTING ROWS
+    productsTable?.querySelectorAll("tr").forEach(attachProductEvents);
+});
+</script>
+</body>
+</html>

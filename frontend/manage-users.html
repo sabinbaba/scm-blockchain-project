@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Manage Users</title>
+    <link rel="stylesheet" href="/css/admin-style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="logo">SCM Blockchain</div>
+    <div class="header-right">
+        <span id="adminName">Admin</span>
+        <button class="logout-btn">Logout</button>
+    </div>
+</header>
+
+<!-- MAIN LAYOUT -->
+<div class="main-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <ul>
+            <li><a href="admin.html">Dashboard</a></li>
+            <li><a href="manage-users.html">Manage Users</a></li>
+            <li><a href="view-products.html">View Products</a></li>
+            <li><a href="blockchain-transactions.html">Blockchain Transactions</a></li>
+            <li><a href="system-logs.html">System Logs</a></li>
+        </ul>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+        <h1>Manage Users</h1>
+
+        <!-- ADD USER BUTTON -->
+        <button id="addUserBtn" class="add-btn">+ Add New User</button>
+
+        <!-- USERS TABLE -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTable">
+                    <tr id="U001">
+                        <td>U001</td>
+                        <td>John Doe</td>
+                        <td>Manufacturer</td>
+                        <td>john@example.com</td>
+                        <td>
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                        </td>
+                    </tr>
+                    <tr id="U002">
+                        <td>U002</td>
+                        <td>Mary Smith</td>
+                        <td>Distributor</td>
+                        <td>mary@example.com</td>
+                        <td>
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MODAL FOR ADD / EDIT USER -->
+        <div id="userModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="modalTitle">Add User</h2>
+                <form id="userForm">
+                    <label for="userName">Name:</label>
+                    <input type="text" id="userName" required>
+
+                    <label for="userEmail">Email:</label>
+                    <input type="email" id="userEmail" required>
+
+                    <label for="userRole">Role:</label>
+                    <select id="userRole" required>
+                        <option value="Manufacturer">Manufacturer</option>
+                        <option value="Distributor">Distributor</option>
+                        <option value="Retailer">Retailer</option>
+                    </select>
+
+                    <button type="submit" class="save-btn">Save</button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <p>&copy; 2026 SCM Blockchain System. All Rights Reserved.</p>
+</footer>
+
+<!-- JS -->
+<script src="/js/admin.js"></script>
+</body>
+</html>

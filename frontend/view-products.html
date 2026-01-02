@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - View Products</title>
+    <link rel="stylesheet" href="/css/admin-style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="logo">SCM Blockchain</div>
+    <div class="header-right">
+        <span id="adminName">Admin</span>
+        <button class="logout-btn">Logout</button>
+    </div>
+</header>
+
+<!-- MAIN LAYOUT -->
+<div class="main-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <ul>
+            <li><a href="admin.html">Dashboard</a></li>
+            <li><a href="manage-users.html">Manage Users</a></li>
+            <li><a href="view-products.html">View Products</a></li>
+            <li><a href="blockchain-transactions.html">Blockchain Transactions</a></li>
+            <li><a href="system-logs.html">System Logs</a></li>
+        </ul>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+        <h1>View Products</h1>
+
+        <!-- ADD PRODUCT BUTTON -->
+        <button id="addProductBtn" class="add-btn">+ Add New Product</button>
+
+        <!-- PRODUCTS TABLE -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Owner</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Batch</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTable">
+                    <tr id="P001">
+                        <td>P001</td>
+                        <td>Smartphone</td>
+                        <td>Electronics</td>
+                        <td>Manufacturer1</td>
+                        <td>Created</td>
+                        <td>2026-01-01</td>
+                        <td>B001</td>
+                        <td>
+                            <button class="edit-btn">Edit</button>
+                            <button class="transfer-btn">Transfer</button>
+                        </td>
+                    </tr>
+                    <tr id="P002">
+                        <td>P002</td>
+                        <td>Vaccine</td>
+                        <td>Health</td>
+                        <td>Manufacturer2</td>
+                        <td>In Transit</td>
+                        <td>2026-01-01</td>
+                        <td>B002</td>
+                        <td>
+                            <button class="edit-btn">Edit</button>
+                            <button class="transfer-btn">Transfer</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MODAL FOR ADD / EDIT PRODUCT -->
+        <div id="productModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="modalTitle">Add Product</h2>
+                <form id="productForm">
+                    <label for="productName">Product Name:</label>
+                    <input type="text" id="productName" required>
+
+                    <label for="productCategory">Category:</label>
+                    <input type="text" id="productCategory" required>
+
+                    <label for="productOwner">Owner:</label>
+                    <input type="text" id="productOwner" required>
+
+                    <label for="productStatus">Status:</label>
+                    <select id="productStatus" required>
+                        <option value="Created">Created</option>
+                        <option value="In Transit">In Transit</option>
+                        <option value="Delivered">Delivered</option>
+                    </select>
+
+                    <label for="productDate">Date:</label>
+                    <input type="date" id="productDate" required>
+
+                    <label for="productBatch">Batch:</label>
+                    <input type="text" id="productBatch" required>
+
+                    <button type="submit" class="save-btn">Save</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- MODAL FOR TRANSFER PRODUCT -->
+        <div id="transferModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Transfer Product</h2>
+                <form id="transferForm">
+                    <label for="newOwner">New Owner:</label>
+                    <input type="text" id="newOwner" required>
+                    <button type="submit" class="save-btn">Transfer</button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <p>&copy; 2026 SCM Blockchain System. All Rights Reserved.</p>
+</footer>
+
+<!-- JS -->
+<script src="/js/admin.js"></script>
+</body>
+</html>

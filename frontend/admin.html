@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Supply Chain</title>
+    <link rel="stylesheet" href="/css/admin-style.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="logo">SCM Blockchain</div>
+    <div class="header-right">
+        <span id="adminName">Admin</span>
+        <button class="logout-btn">Logout</button>
+    </div>
+</header>
+
+<!-- Layout -->
+<div class="main-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul>
+            <li><a href="admin.html">Dashboard</a></li>
+            <li><a href="manage-users.html">Manage Users</a></li>
+            <li><a href="view-products.html">View Products</a></li>
+            <li><a href="blockchain-transactions.html">Blockchain Transactions</a></li>
+            <li><a href="system-logs.html">System Logs</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+        <h1>Welcome, Admin!</h1>
+        <div class="cards">
+            <div class="card">
+                <h3>Total Users</h3>
+                <p id="totalUsers">12</p>
+            </div>
+            <div class="card">
+                <h3>Total Products</h3>
+                <p id="totalProducts">50</p>
+            </div>
+            <div class="card">
+                <h3>Transactions</h3>
+                <p id="totalTx">75</p>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h2>Recent Transactions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tx ID</th>
+                        <th>Action</th>
+                        <th>User</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="txTable">
+                    <tr>
+                        <td>TX001</td>
+                        <td>Added Product</td>
+                        <td>Manufacturer1</td>
+                        <td>2026-01-02</td>
+                    </tr>
+                    <tr>
+                        <td>TX002</td>
+                        <td>Transferred Product</td>
+                        <td>Distributor1</td>
+                        <td>2026-01-02</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2026 SCM Blockchain System. All Rights Reserved.</p>
+</footer>
+
+<script src="/js/admin.js"></script>
+</body>
+</html>

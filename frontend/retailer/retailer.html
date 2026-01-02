@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Retailer Dashboard</title>
+    <link rel="stylesheet" href="../css/admin-style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="logo">SCM Blockchain</div>
+    <div class="header-right">
+        <span id="userName">Retailer1</span>
+        <button class="logout-btn">Logout</button>
+    </div>
+</header>
+
+<!-- MAIN LAYOUT -->
+<div class="main-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <ul>
+            <li><a href="retailer.html">Dashboard</a></li>
+            <li><a href="my-products.html">My Products</a></li>
+            <li><a href="sell-products.html">Sell Products</a></li>
+        </ul>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+        <h1>Retailer Dashboard</h1>
+        <p>Welcome, Retailer1! You can view your products and mark them as sold to customers.</p>
+
+        <!-- PRODUCTS TABLE -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Owner</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Batch</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTable">
+                    <tr id="P001">
+                        <td>P001</td>
+                        <td>Smartphone</td>
+                        <td>Electronics</td>
+                        <td>Retailer1</td>
+                        <td>In Transit</td>
+                        <td>2026-01-02</td>
+                        <td>B001</td>
+                        <td>
+                            <button class="sell-btn">Mark as Sold</button>
+                        </td>
+                    </tr>
+                    <tr id="P002">
+                        <td>P002</td>
+                        <td>Vaccine</td>
+                        <td>Health</td>
+                        <td>Distributor1</td>
+                        <td>In Transit</td>
+                        <td>2026-01-02</td>
+                        <td>B002</td>
+                        <td>
+                            <!-- Sell button hidden: Retailer doesn't own this -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <p>&copy; 2026 SCM Blockchain System. All Rights Reserved.</p>
+</footer>
+
+<!-- JS -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const role = "Retailer";
+    const username = "Retailer1";
+
+    // DISPLAY USER NAME
+    document.getElementById("userName").innerText = username;
+
+    const productsTable = document.getElementById("productsTable");
+
+    // ATTACH EVENTS TO EACH ROW
+    function attachProductEvents(row){
+        const owner = row.cells[3].innerText;
+        const sellBtn = row.querySelector(".sell-btn");
+
+        if(sellBtn){
+            if(owner !== username){
+                sellBtn.style.display = "none"; // cannot sell products not owned
+            } else {
+                sellBtn.addEventListener("click", () => {
+                    if(confirm("Mark this product as Sold?")){
+                        row.cells[4].innerText = "Sold";
+                        sellBtn.disabled = true;
+                        sellBtn.innerText = "Sold";
+                    }
+                });
+            }
+        }
+    }
+
+    // INITIALIZE EXISTING ROWS
+    productsTable?.querySelectorAll("tr").forEach(attachProductEvents);
+});
+</script>
+</body>
+</html>

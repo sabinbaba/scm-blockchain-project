@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Retailer - Sell Products</title>
+    <link rel="stylesheet" href="../css/admin-style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="logo">SCM Blockchain</div>
+    <div class="header-right">
+        <span id="userName">Retailer1</span>
+        <button class="logout-btn">Logout</button>
+    </div>
+</header>
+
+<!-- MAIN LAYOUT -->
+<div class="main-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <ul>
+            <li><a href="retailer.html">Dashboard</a></li>
+            <li><a href="my-products.html">My Products</a></li>
+            <li><a href="sell-products.html" class="active">Sell Products</a></li>
+        </ul>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+        <h1>Sell Products</h1>
+        <p>Transfer your products to Customers.</p>
+
+        <!-- PRODUCTS TABLE -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Owner</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Batch</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTable">
+                    <tr id="P001">
+                        <td>P001</td>
+                        <td>Smartphone</td>
+                        <td>Electronics</td>
+                        <td>Retailer1</td>
+                        <td>In Transit</td>
+                        <td>2026-01-02</td>
+                        <td>B001</td>
+                        <td><button class="sell-btn">Sell</button></td>
+                    </tr>
+                    <tr id="P002">
+                        <td>P002</td>
+                        <td>Vaccine</td>
+                        <td>Health</td>
+                        <td>Distributor1</td>
+                        <td>In Transit</td>
+                        <td>2026-01-03</td>
+                        <td>B002</td>
+                        <td><button class="sell-btn">Sell</button></td>
+                    </tr>
+                    <tr id="P003">
+                        <td>P003</td>
+                        <td>Tablet</td>
+                        <td>Electronics</td>
+                        <td>Retailer1</td>
+                        <td>Delivered</td>
+                        <td>2026-01-03</td>
+                        <td>B003</td>
+                        <td><button class="sell-btn">Sell</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SELL MODAL -->
+        <div id="sellModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Sell Product</h2>
+                <form id="sellForm">
+                    <label for="customerName">Customer Username:</label>
+                    <input type="text" id="customerName" placeholder="Enter Customer username" required>
+                    <button type="submit" class="save-btn">Sell</button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <p>&copy; 2026 SCM Blockchain System. All Rights Reserved.</p>
+</footer>
+
+<!-- JS -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const username = "Retailer1"; // logged-in retailer
+    document.getElementById("userName").innerText = username;
+
+    const productsTable = document.getElementById("productsTable");
+    const sellModal = document.getElementById("sellModal");
+    const sellForm = document.getElementById("sellForm");
+    const closeBtns = document.querySelectorAll(".modal .close");
+
+    // Open modal when sell button clicked
+    productsTable.querySelectorAll("tr").forEach(row => {
+        const owner = row.cells[3].innerText;
+        const sellBtn = row.querySelector(".sell-btn");
+
+        if(owner !== username) sellBtn.style.display = "none"; // cannot sell others' products
+        else sellBtn.addEventListener("click", () => {
+            sellModal.style.display = "block";
+            sellForm.dataset.rowId = row.id;
+            document.getElementById("customerName").value = "";
+        });
+    });
+
+    // Close modal
+    closeBtns.forEach(btn => btn.addEventListener("click", () => {
+        btn.closest(".modal").style.display = "none";
+    }));
+    window.onclick = e => { if(e.target.classList.contains("modal")) e.target.style.display = "none"; };
+
+    // Sell product
+    sellForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const customer = document.getElementById("customerName").value.trim();
+        if(!customer) return alert("Enter Customer username!");
+
+        const rowId = sellForm.dataset.rowId;
+        const row = document.getElementById(rowId);
+        row.cells[3].innerText = customer;
+        row.cells[4].innerText = "Sold";
+
+        // Remove sell button after selling
+        row.querySelector(".sell-btn")?.remove();
+        sellModal.style.display = "none";
+        alert(`Product ${row.cells[1].innerText} sold to ${customer}`);
+    });
+});
+</script>
+
+</body>
+</html>

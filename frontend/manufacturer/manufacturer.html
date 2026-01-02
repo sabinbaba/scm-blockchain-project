@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manufacturer Dashboard</title>
+    <link rel="stylesheet" href="../css/admin-style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="logo">SCM Blockchain</div>
+    <div class="header-right">
+        <span id="userName">Manufacturer1</span>
+        <button class="logout-btn">Logout</button>
+    </div>
+</header>
+
+<!-- MAIN LAYOUT -->
+<div class="main-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <ul>
+            <li><a href="manufacturer.html">Dashboard</a></li>
+            <li><a href="my-products.html">My Products</a></li>
+            <li><a href="transfer-products.html">Transfer Products</a></li>
+        </ul>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+        <h1>Manufacturer Dashboard</h1>
+        <p>Welcome, Manufacturer1! Here you can manage your products and transfer them to distributors.</p>
+
+        <!-- ADD PRODUCT BUTTON -->
+        <button id="addProductBtn" class="add-btn">+ Add New Product</button>
+
+        <!-- PRODUCTS TABLE -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Owner</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Batch</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTable">
+                    <!-- Sample Product -->
+                    <tr id="P001">
+                        <td>P001</td>
+                        <td>Smartphone</td>
+                        <td>Electronics</td>
+                        <td>Manufacturer1</td>
+                        <td>Created</td>
+                        <td>2026-01-02</td>
+                        <td>B001</td>
+                        <td>
+                            <button class="edit-btn">Edit</button>
+                            <button class="transfer-btn">Transfer</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MODAL FOR ADD / EDIT PRODUCT -->
+        <div id="productModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="modalTitle">Add Product</h2>
+                <form id="productForm">
+                    <label for="productName">Product Name:</label>
+                    <input type="text" id="productName" required>
+
+                    <label for="productCategory">Category:</label>
+                    <input type="text" id="productCategory" required>
+
+                    <label for="productOwner">Owner:</label>
+                    <input type="text" id="productOwner" value="Manufacturer1" readonly>
+
+                    <label for="productStatus">Status:</label>
+                    <select id="productStatus" required>
+                        <option value="Created">Created</option>
+                        <option value="In Transit">In Transit</option>
+                        <option value="Delivered">Delivered</option>
+                    </select>
+
+                    <label for="productDate">Date:</label>
+                    <input type="date" id="productDate" required>
+
+                    <label for="productBatch">Batch:</label>
+                    <input type="text" id="productBatch" required>
+
+                    <button type="submit" class="save-btn">Save</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- MODAL FOR TRANSFER PRODUCT -->
+        <div id="transferModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Transfer Product</h2>
+                <form id="transferForm">
+                    <label for="newOwner">Transfer to Distributor:</label>
+                    <input type="text" id="newOwner" placeholder="Distributor Name" required>
+                    <button type="submit" class="save-btn">Transfer</button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <p>&copy; 2026 SCM Blockchain System. All Rights Reserved.</p>
+</footer>
+
+<!-- JS -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const role = "Manufacturer";
+    const username = "Manufacturer1";
+
+    // DISPLAY USER NAME
+    document.getElementById("userName").innerText = username;
+
+    const productModal = document.getElementById("productModal");
+    const transferModal = document.getElementById("transferModal");
+    const addProductBtn = document.getElementById("addProductBtn");
+    const closeBtns = document.querySelectorAll(".modal .close");
+    const productsTable = document.getElementById("productsTable");
+    const productForm = document.getElementById("productForm");
+    const transferForm = document.getElementById("transferForm");
+
+    let editProductId = "";
+
+    // OPEN ADD PRODUCT MODAL
+    addProductBtn?.addEventListener("click", () => {
+        productModal.style.display = "block";
+        document.getElementById("modalTitle").innerText = "Add Product";
+        productForm.reset();
+        document.getElementById("productOwner").value = username;
+        editProductId = "";
+    });
+
+    // CLOSE MODALS
+    closeBtns.forEach(btn => btn.addEventListener("click", () => {
+        btn.closest(".modal").style.display = "none";
+    }));
+    window.onclick = (e) => { if(e.target.classList.contains("modal")) e.target.style.display = "none"; };
+
+    // SAVE PRODUCT
+    productForm?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("productName").value;
+        const category = document.getElementById("productCategory").value;
+        const owner = document.getElementById("productOwner").value;
+        const status = document.getElementById("productStatus").value;
+        const date = document.getElementById("productDate").value;
+        const batch = document.getElementById("productBatch").value;
+
+        if(editProductId){ // EDIT
+            const row = document.getElementById(editProductId);
+            row.cells[1].innerText = name;
+            row.cells[2].innerText = category;
+            row.cells[4].innerText = status;
+            row.cells[5].innerText = date;
+            row.cells[6].innerText = batch;
+        } else { // ADD NEW
+            const row = productsTable.insertRow();
+            const pid = `P${String(productsTable.rows.length + 1).padStart(3,'0')}`;
+            row.id = pid;
+            row.innerHTML = `
+                <td>${pid}</td>
+                <td>${name}</td>
+                <td>${category}</td>
+                <td>${owner}</td>
+                <td>${status}</td>
+                <td>${date}</td>
+                <td>${batch}</td>
+                <td>
+                    <button class="edit-btn">Edit</button>
+                    <button class="transfer-btn">Transfer</button>
+                </td>
+            `;
+            attachProductEvents(row);
+        }
+
+        productModal.style.display = "none";
+    });
+
+    // ATTACH EVENTS TO EACH ROW
+    function attachProductEvents(row){
+        row.querySelector(".edit-btn").addEventListener("click", () => {
+            editProductId = row.id;
+            productModal.style.display = "block";
+            document.getElementById("modalTitle").innerText = "Edit Product";
+            document.getElementById("productName").value = row.cells[1].innerText;
+            document.getElementById("productCategory").value = row.cells[2].innerText;
+            document.getElementById("productOwner").value = row.cells[3].innerText;
+            document.getElementById("productStatus").value = row.cells[4].innerText;
+            document.getElementById("productDate").value = row.cells[5].innerText;
+            document.getElementById("productBatch").value = row.cells[6].innerText;
+        });
+
+        row.querySelector(".transfer-btn").addEventListener("click", () => {
+            if(row.cells[3].innerText !== username){
+                alert("You can only transfer products you own!");
+                return;
+            }
+            transferModal.style.display = "block";
+            transferForm.dataset.rowId = row.id;
+            document.getElementById("newOwner").value = "";
+        });
+    }
+
+    // TRANSFER PRODUCT
+    transferForm?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const newOwner = document.getElementById("newOwner").value;
+        const rowId = transferForm.dataset.rowId;
+        const row = document.getElementById(rowId);
+        row.cells[3].innerText = newOwner;
+        row.cells[4].innerText = "In Transit";
+        transferModal.style.display = "none";
+    });
+
+    // INITIALIZE EXISTING ROWS
+    productsTable?.querySelectorAll("tr").forEach(attachProductEvents);
+});
+</script>
+</body>
+</html>

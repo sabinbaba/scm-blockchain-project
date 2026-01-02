@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Blockchain Transactions</title>
+    <link rel="stylesheet" href="/css/admin-style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">SCM Blockchain</div>
+    <div class="header-right">
+        <span id="adminName">Admin</span>
+        <button class="logout-btn">Logout</button>
+    </div>
+</header>
+
+<div class="main-container">
+
+    <aside class="sidebar">
+        <ul>
+            <li><a href="admin.html">Dashboard</a></li>
+            <li><a href="manage-users.html">Manage Users</a></li>
+            <li><a href="view-products.html">View Products</a></li>
+            <li><a href="blockchain-transactions.html">Blockchain Transactions</a></li>
+            <li><a href="system-logs.html">System Logs</a></li>
+        </ul>
+    </aside>
+
+    <main class="content">
+        <h1>Blockchain Transactions</h1>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction Hash</th>
+                        <th>Action</th>
+                        <th>Product ID</th>
+                        <th>Sender</th>
+                        <th>Receiver</th>
+                        <th>Date & Time</th>
+                    </tr>
+                </thead>
+                <tbody id="txTable">
+                    <tr>
+                        <td>0xA1B2C3D4</td>
+                        <td>Add Product</td>
+                        <td>P001</td>
+                        <td>Manufacturer1</td>
+                        <td>-</td>
+                        <td>2026-01-02 10:00 AM</td>
+                    </tr>
+                    <tr>
+                        <td>0xE5F6G7H8</td>
+                        <td>Transfer Product</td>
+                        <td>P001</td>
+                        <td>Manufacturer1</td>
+                        <td>Distributor1</td>
+                        <td>2026-01-02 12:30 PM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2026 SCM Blockchain System. All Rights Reserved.</p>
+</footer>
+
+<script src="/js/admin.js"></script>
+</body>
+</html>
